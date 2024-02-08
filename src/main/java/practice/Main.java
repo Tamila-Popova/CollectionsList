@@ -29,11 +29,11 @@ public class Main {
                 case "LIST" -> {
                     todoList.getTodos();
                     ArrayList<String> todos = todoList.getTodos();
-                    if (text.length <= 1) {
+                    if (todos.size() <= 1) {
                         System.out.println("-");
                     }
                     for (int i = 0; i < todos.size(); i++) {
-                        System.out.println(todos.get(i));
+                        System.out.println(i + " - " + todos.get(i));
                     }
                 }
                 case "DELETE" -> {
@@ -41,12 +41,10 @@ public class Main {
                     int index = todoList.getTodos().size();
                     if (text.length <= 1) {
                         System.out.println("-");
-                    }
-                    if (text[1].matches(regex) && num >= 0 && num <= index) {
-                        todoList.delete(num);
-                        System.out.println("Дело " + '"' + text[2] + '"' + "удалено");
                     } else {
-                        System.out.println("Дело с таким номером не существует");
+                        if (text[1].matches(regex) && num > 0 && num <= index) {
+                            todoList.delete(num);
+                        }
                     }
                 }
                 case "EDIT" -> {

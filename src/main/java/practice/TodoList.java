@@ -29,6 +29,10 @@ public class TodoList {
     public void delete(int index) {
         if (index >= 0 && index < todos.size()) {
             todos.remove(index);
+            System.out.println("Дело " + index + " удалено." );
+        }
+        else {
+            System.out.println("Дело с таким номером не существует");
         }
     }
 
