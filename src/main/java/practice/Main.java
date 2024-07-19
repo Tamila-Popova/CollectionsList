@@ -8,22 +8,16 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            String regex = "\\d+";
             String sc = new Scanner(System.in).nextLine();
-            String[] text = sc.split(" ", 3);
-            switch (text[0]) {
+            String[] comands = sc.split("\\s", 2);
+            String commandName = comands[0];
+            switch (commandName.toUpperCase()) {
                 case "ADD" -> {
-                    if (text.length <= 1) {
+                    if (comands.length <= 1) {
                         System.out.println("-");
                     } else {
-                        if (text[1].matches(regex)) {
-                            todoList.add(Integer.parseInt(text[1]), text[2]);
-                            System.out.println("Добавлено дело " + '"' + text[2] + '"');
-                        } else {
-                            String sum = text[1].concat(" ").concat(text[2]);
-                            System.out.println("Добавлено дело " + '"' + sum + '"');
-                            todoList.add(sum);
-                        }
+                        System.out.println("Добавлено дело " + '"' + comands[1] + '"');
+                        todoList.add(comands[1]);
                     }
                 }
                 case "LIST" -> {
@@ -32,30 +26,28 @@ public class Main {
                     if (todos.size() <= 1) {
                         System.out.println("-");
                     }
-                    for (int i = 0; i < todos.size(); i++) {
-                        System.out.println(i + " - " + todos.get(i));
+                    int counter = 0;
+                    for (String item : todos) {
+                        System.out.println(counter + " - " + item);
+                        counter++;
                     }
                 }
                 case "DELETE" -> {
-                    int num = Integer.parseInt(text[1]);
-                    int index = todoList.getTodos().size();
-                    if (text.length <= 1) {
+                    if (comands.length <= 1) {
                         System.out.println("-");
                     } else {
-                        if (text[1].matches(regex) && num > 0 && num <= index) {
-                            todoList.delete(num);
-                        }
+                        int num = Integer.parseInt(comands[1]);
+                        todoList.delete(num);
                     }
                 }
                 case "EDIT" -> {
-                    int num = Integer.parseInt(text[1]);
-                    int index = todoList.getTodos().size();
-                    if (text.length <= 1) {
+                    String[] editParams = sc.split("\\s", 3);
+                    if (editParams.length <= 1) {
                         System.out.println("-");
-                    }
-                    if (text[1].matches(regex) && num >= 0 && num < index) {
-                        todoList.edit(Integer.parseInt(text[1]), text[2]);
-                        System.out.println("Дело " + '"' + Integer.parseInt(text[1]) + '"' + "заменено на " + '"' + text[2] + '"');
+                    } else {
+                        int num = Integer.parseInt(editParams[1]);
+                        todoList.edit(num, editParams[2]);
+                        System.out.println("Дело " + '"' + num + '"' + "заменено на " + '"' + editParams[2] + '"');
                     }
                 }
             }
